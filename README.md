@@ -4,6 +4,8 @@
 # tiltAddCO2
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/2DegreesInvesting/tiltAddCO2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/2DegreesInvesting/tiltAddCO2/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of tiltAddCO2 is to add CO2 data to tilt profiles.
