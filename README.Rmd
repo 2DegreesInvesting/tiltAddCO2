@@ -1,0 +1,46 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# tiltAddCO2
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of tiltAddCO2 is to add CO2 data to tilt profiles.
+
+## Example
+
+```{r example}
+library(dplyr, warn.conflicts = FALSE)
+library(readr)
+library(tiltToyData)
+library(tiltIndicatorAfter)
+library(tiltAddCO2)
+
+file <- toy_emissions_profile_products_ecoinvent()
+co2 <- read_csv(file, show_col_types = FALSE)
+profile <- toy_profile_emissions_impl_output()
+
+with_co2 <- profile |>
+  add_co2(co2)
+
+with_co2 |>
+  unnest_product() |>
+  relocate(matches("co2"))
+
+with_co2 |>
+  unnest_company() |>
+  relocate(matches("co2"))
+```
