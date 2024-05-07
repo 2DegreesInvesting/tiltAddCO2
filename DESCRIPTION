@@ -7,7 +7,7 @@ Authors@R: c(
     person("2 Degrees Investing Initiative", , , "contact@2degrees-investing.org", role = c("cph", "fnd"))
   )
 Description: Add CO2.
-License: AGPL (>= 3)
+License: GPL (>= 3)
 URL: https://2degreesinvesting.github.io/tiltAddCO2/, https://github.com/2DegreesInvesting/tiltAddCO2
 Imports: 
     dplyr,
