@@ -26,6 +26,7 @@ Suggests:
     withr
 Remotes: 
     2DegreesInvesting/tiltIndicator,
+    2DegreesInvesting/tiltIndicatorAfter,
     2degreesinvesting/tiltToyData
 Config/testthat/edition: 3
 Encoding: UTF-8
