@@ -1,9 +1,11 @@
 Package: tiltAddCO2
 Title: Add CO2
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person("Mauro", "Lepore", , "maurolepore@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "https://orcid.org/0000-0002-1986-7988"))
+           comment = c(ORCID = "https://orcid.org/0000-0002-1986-7988")),
+    person("2 Degrees Investing Initiative", , , "contact@2degrees-investing.org", role = c("cph", "fnd"))
+  )
 Description: Add CO2.
 License: AGPL (>= 3)
 Encoding: UTF-8
