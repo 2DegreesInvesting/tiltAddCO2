@@ -8,15 +8,7 @@ Authors@R: c(
   )
 Description: Add CO2.
 License: AGPL (>= 3)
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
-Suggests: 
-    testthat (>= 3.0.0),
-    tidyr,
-    tiltIndicatorAfter,
-    withr
-Config/testthat/edition: 3
+URL: https://2degreesinvesting.github.io/tiltAddCO2/
 Imports: 
     dplyr,
     glue,
@@ -25,6 +17,17 @@ Imports:
     rlang,
     tibble,
     tidyselect,
-    tiltIndicator,
-    tiltToyData
-URL: https://2degreesinvesting.github.io/tiltAddCO2/
+    tiltIndicator (>= 0.0.0.9221),
+    tiltToyData (>= 0.0.0.9204)
+Suggests: 
+    testthat (>= 3.0.0),
+    tidyr,
+    tiltIndicatorAfter (>= 0.0.0.9038),
+    withr
+Remotes: 
+    2DegreesInvesting/tiltIndicator,
+    2degreesinvesting/tiltToyData
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
