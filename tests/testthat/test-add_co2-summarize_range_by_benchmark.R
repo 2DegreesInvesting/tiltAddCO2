@@ -39,13 +39,11 @@ test_that("different benchmarks output different number of rows", {
 })
 
 test_that("with a simple case yields the same as `summarize_range()` (#214#issuecomment-2061180499)", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
-         "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-         "all",          "medium",             2L,  "m2",    "sector1",    "subsector2",     "'1234'"
+  data <- toy_summarize_range_by_benchmark(
+    !!col_risk_category_emissions() := c("low", "medium"),
+    !!col_footprint() := c(1:2),
+    !!col_tsubsector() := paste0("subsector", 1:2)
   )
-  # styler: on
 
   expect_equal(
     summarize_range(
