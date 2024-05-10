@@ -33,3 +33,20 @@ col_footprint <- function() {
 col_footprint_mean <- function() {
   "co2_avg"
 }
+
+col_unit <- function() {
+  "unit"
+}
+
+col_isic <- function() {
+  "isic_4digit"
+}
+
+col_tsector <- function() {
+  "tilt_sector"
+}
+
+col_tsubsector <- function() {
+  "tilt_subsector"
+}
+

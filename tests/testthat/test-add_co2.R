@@ -7,7 +7,18 @@ test_that("at product level, different values of co2 footprint yield different v
 
   out <- profile |> add_co2(co2)
 
-  cols <- c("companies_id", "^min", "^max", "unit", "benchmark", "emission_profile", "unit", "tilt_sector", "tilt_subsector", "isic_4digit", "co2_footprint")
+  cols <- c(
+      col_company_id(),
+      "^min",
+      "^max",
+      col_unit(),
+      col_benchmark(),
+      col_risk_category_emissions_profile(),
+      col_tsector(),
+      col_tsubsector(),
+      col_isic(),
+      col_footprint()
+    )
   product <- out |>
     unnest_product() |>
     filter(benchmark == "unit") |>
