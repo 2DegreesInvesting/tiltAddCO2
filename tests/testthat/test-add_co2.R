@@ -136,7 +136,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
 
   out <- profile |> add_co2(co2)
 
-  grouped_by <- "unit"
+  grouped_by <- col_unit()
   # "high", "medium", "low", NA
   n_risk_category <- 4
   all <- c(col_benchmark(), col_risk_category_emissions())
