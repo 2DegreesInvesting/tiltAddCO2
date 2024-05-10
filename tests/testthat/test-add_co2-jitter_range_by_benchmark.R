@@ -45,7 +45,7 @@ test_that("adds columns `min_jitter` and `max_jitter`", {
   # styler: on
 
   out <- jitter_range_by_benchmark(data)
-  expect_named(out, c(names(data), c("min_jitter", "max_jitter")))
+  expect_named(out, c(names(data), c(col_min_jitter(), "max_jitter")))
 })
 
 test_that("without crucial columns errors gracefully", {

@@ -33,8 +33,8 @@ test_that("at product level, different values of co2 footprint yield different v
 
   # yield different jittered footprint
   expect_false(identical(
-    pull(filter(product, unit == "kg"), "min_jitter"),
-    pull(filter(product, unit == "m2"), "min_jitter")
+    pull(filter(product, unit == "kg"), col_min_jitter()),
+    pull(filter(product, unit == "m2"), col_min_jitter())
   ))
 })
 
@@ -204,7 +204,7 @@ test_that("at product level, has the jittered range of co2 footprint", {
   profile <- toy_profile_emissions_impl_output()
 
   out <- profile |> add_co2(co2)
-  expect_true(hasName(out |> unnest_product(), "min_jitter"))
+  expect_true(hasName(out |> unnest_product(), col_min_jitter()))
   expect_true(hasName(out |> unnest_product(), "max_jitter"))
 })
 
@@ -215,7 +215,7 @@ test_that("at product level, the jittered range of co2 footprint isn't full of `
   out <- profile |> add_co2(co2)
 
   product <- unnest_product(out)
-  expect_false(all(is.na(product[["min_jitter"]])))
+  expect_false(all(is.na(product[[col_min_jitter()]])))
   expect_false(all(is.na(product[["max_jitter"]])))
 })
 

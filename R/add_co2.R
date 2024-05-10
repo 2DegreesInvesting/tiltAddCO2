@@ -89,7 +89,7 @@ add_co2_footprint_mean <- function(data) {
 }
 
 prune_useless_rows_introduced_when_binding_disparate_columns <- function(data) {
-  filter(data, !is.na(.data[["min_jitter"]]) | !is.na(.data[["max_jitter"]]))
+  filter(data, !is.na(.data[[col_min_jitter()]]) | !is.na(.data[["max_jitter"]]))
 }
 
 restore_missing_products_from <- function(data, profile) {
