@@ -21,25 +21,37 @@ test_that("different benchmarks output different number of rows", {
   expected <- 3
   # 3 = 3 emission_profile
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    expected
+  )
 
   benchmark <- col_unit()
   expected <- 6
   # 6 = 3 emission_profile * 2 unit
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    expected
+  )
 
   benchmark <- col_tsector()
   expected <- 12
   # 12 = 3 emission_profile * 2 tilt_sector * 2 tilt_subsector
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    expected
+  )
 
   benchmark <- unit(col_tsector())
   expected <- 24
   # 24 = 3 emission_profile * 2 tilt_sector * 2 tilt_subsector * 2 unit
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    expected
+  )
 })
 
 test_that("with a simple case yields the same as `summarize_range()` (#214#issuecomment-2061180499)", {
