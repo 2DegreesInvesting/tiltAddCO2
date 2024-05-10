@@ -186,8 +186,8 @@ test_that("at product level, has min and max", {
   profile <- toy_profile_emissions_impl_output()
 
   out <- profile |> add_co2(co2)
-  expect_true(hasName(unnest_product(out), "min"))
-  expect_true(hasName(unnest_product(out), "max"))
+  expect_true(hasName(unnest_product(out), col_min()))
+  expect_true(hasName(unnest_product(out), col_max()))
 })
 
 test_that("at company level, lacks min and max", {
@@ -195,8 +195,8 @@ test_that("at company level, lacks min and max", {
   profile <- toy_profile_emissions_impl_output()
 
   out <- profile |> add_co2(co2)
-  expect_false(hasName(unnest_company(out), "min"))
-  expect_false(hasName(unnest_company(out), "max"))
+  expect_false(hasName(unnest_company(out), col_min()))
+  expect_false(hasName(unnest_company(out), col_max()))
 })
 
 test_that("at product level, has the jittered range of co2 footprint", {
