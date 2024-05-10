@@ -54,13 +54,22 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
   profile <- toy_profile_emissions_impl_output()
 
+  relevant_pattern <- c(
+      col_benchmark(),
+      pattern_risk_category_emissions_any(),
+      col_footprint(),
+      col_footprint_mean(),
+      "^min$",
+      "^max$"
+    )
+
   .benchmark <- "all"
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
     filter(benchmark %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
-    select(matches(c(col_benchmark(), "profile$", "co2", "min$", "max$"))) |>
+    select(matches(relevant_pattern)) |>
     distinct()
 
   # different risk category has different min
@@ -88,7 +97,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     unnest_product() |>
     filter(benchmark %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
-    select(matches(c(col_benchmark(), "profile$", "co2", "min$", "max$"))) |>
+    select(matches(relevant_pattern)) |>
     distinct()
 
   # different risk category has different min
