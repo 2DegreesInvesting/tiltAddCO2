@@ -66,7 +66,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     add_co2(co2) |>
     unnest_product() |>
     filter(.data[[col_benchmark()]] %in% .benchmark) |>
-    filter(emission_profile == c("high", "low")) |>
+    filter(.data[[col_risk_category_emissions()]] == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
 
@@ -94,7 +94,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     add_co2(co2) |>
     unnest_product() |>
     filter(.data[[col_benchmark()]] %in% .benchmark) |>
-    filter(emission_profile == c("high", "low")) |>
+    filter(.data[[col_risk_category_emissions()]] == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
 
