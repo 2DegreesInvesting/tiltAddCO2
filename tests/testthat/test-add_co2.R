@@ -2,7 +2,7 @@ test_that("at product level, different values of co2 footprint yield different v
   # From reprex 2 at https://github.com/2DegreesInvesting/tiltIndicatorAfter/pull/214#issuecomment-2086975144
   .id <- c("ironhearted_tarpan", "epitaphic_yellowhammer")
   profile <- toy_profile_emissions_impl_output() |>
-    filter(companies_id %in% .id)
+    filter(.data[[col_company_id()]] %in% .id)
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
 
   out <- profile |> add_co2(co2)
@@ -65,7 +65,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
-    filter(benchmark %in% .benchmark) |>
+    filter(.data[[col_benchmark()]] %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
@@ -74,26 +74,26 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(min)
+    pull(col_min())
   high_min <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(min)
+    pull(col_min())
   expect_false(identical(low_min, high_min))
 
   # different risk category has different max
   low_max <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(max)
+    pull(col_max())
   high_max <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(max)
+    pull(col_max())
   expect_false(identical(low_max, high_max))
 
   .benchmark <- col_unit()
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
-    filter(benchmark %in% .benchmark) |>
+    filter(.data[[col_benchmark()]] %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
@@ -102,19 +102,19 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(min)
+    pull(col_min())
   high_min <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(min)
+    pull(col_min())
   expect_false(identical(low_min, high_min))
 
   # different risk category has different max
   low_max <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(max)
+    pull(col_max())
   high_max <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(max)
+    pull(col_max())
   expect_false(identical(low_max, high_max))
 })
 
@@ -131,8 +131,8 @@ test_that("at company level, yields the expected number of rows with benchmark '
 
   company <- out |>
     unnest_company() |>
-    filter(companies_id %in% companies_id[[1]]) |>
-    filter(benchmark == grouped_by)
+    filter(.data[[col_company_id()]] %in% .data[[col_company_id()]][[1]]) |>
+    filter(.data[[col_benchmark()]] == grouped_by)
 
   expect_equal(nrow(company), expected)
 })
@@ -150,8 +150,8 @@ test_that("at company level, yields the expected number of rows with benchmark '
   groups <- group_benchmark(col_unit(), all)[[1]]
   n_unit <- out |>
     unnest_product() |>
-    filter(companies_id %in% companies_id[[1]]) |>
-    filter(benchmark == grouped_by) |>
+    filter(.data[[col_company_id()]] %in% .data[[col_company_id()]][[1]]) |>
+    filter(.data[[col_benchmark()]] == grouped_by) |>
     select(all_of(groups)) |>
     distinct() |>
     nrow()
@@ -159,8 +159,8 @@ test_that("at company level, yields the expected number of rows with benchmark '
 
   company <- out |>
     unnest_company() |>
-    filter(companies_id %in% companies_id[[1]]) |>
-    filter(benchmark == grouped_by)
+    filter(.data[[col_company_id()]] %in% .data[[col_company_id()]][[1]]) |>
+    filter(.data[[col_benchmark()]] == grouped_by)
 
   expect_equal(nrow(company), expected)
 })

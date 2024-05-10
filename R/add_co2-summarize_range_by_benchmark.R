@@ -31,3 +31,13 @@ check_summarize_range_by_benchmark <- function(data, benchmark_cols) {
 
   invisible(data)
 }
+
+toy_summarize_range_by_benchmark <- example_data_factory(tibble(
+  !!col_benchmark() := "all",
+  !!col_risk_category_emissions() := "low",
+  !!col_footprint() := 1L,
+  !!col_unit() := "m2",
+  !!col_tsector() := "sector1",
+  !!col_tsubsector() := "subsector1",
+  !!col_isic() := "'1234'"
+))

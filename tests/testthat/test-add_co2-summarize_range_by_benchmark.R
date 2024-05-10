@@ -1,51 +1,65 @@
 test_that("different benchmarks output different number of rows", {
   x <- tidyr::expand_grid(
-    benchmark = c("all", col_unit(), col_tsector(), unit(col_tsector())),
-    emission_profile = c("low", "medium", "high"),
-    unit = c("m2", "kg"),
-    tilt_sector = c("sector1", "sector2"),
-    tilt_subsector = c("subsector1", "subsector2"),
+    !!col_benchmark() := c("all", col_unit(), col_tsector(), unit(col_tsector())),
+    !!col_risk_category_emissions() := c("low", "medium", "high"),
+    !!col_unit() := c("m2", "kg"),
+    !!col_tsector() := c("sector1", "sector2"),
+    !!col_tsubsector() := c("subsector1", "subsector2"),
   )
   y <- tibble(
-    emission_profile = c("low", "medium", "high"),
-    isic_4digit = "'1234'",
-    co2_footprint = 1:3,
+    !!col_risk_category_emissions() := c("low", "medium", "high"),
+    !!col_isic() := "'1234'",
+    !!col_footprint() := 1:3,
   )
-  data <- left_join(x, y, by = col_risk_category_emissions(), relationship = "many-to-many")
+  data <- left_join(
+    x, y,
+    by = col_risk_category_emissions(),
+    relationship = "many-to-many"
+  )
 
-  benchmark <- "all"
+  .benchmark <- "all"
   expected <- 3
   # 3 = 3 emission_profile
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
+    expected
+  )
 
-  benchmark <- col_unit()
+  .benchmark <- col_unit()
   expected <- 6
   # 6 = 3 emission_profile * 2 unit
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
+    expected
+  )
 
-  benchmark <- col_tsector()
+  .benchmark <- col_tsector()
   expected <- 12
   # 12 = 3 emission_profile * 2 tilt_sector * 2 tilt_subsector
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
+    expected
+  )
 
-  benchmark <- unit(col_tsector())
+  .benchmark <- unit(col_tsector())
   expected <- 24
   # 24 = 3 emission_profile * 2 tilt_sector * 2 tilt_subsector * 2 unit
   out <- summarize_range_by_benchmark(data)
-  expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
+  expect_equal(
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
+    expected
+  )
 })
 
 test_that("with a simple case yields the same as `summarize_range()` (#214#issuecomment-2061180499)", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
-         "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-         "all",          "medium",             2L,  "m2",    "sector1",    "subsector2",     "'1234'"
+  data <- toy_summarize_range_by_benchmark(
+    !!col_risk_category_emissions() := c("low", "medium"),
+    !!col_footprint() := c(1:2),
+    !!col_tsubsector() := paste0("subsector", 1:2)
   )
-  # styler: on
 
   expect_equal(
     summarize_range(
@@ -58,41 +72,24 @@ test_that("with a simple case yields the same as `summarize_range()` (#214#issue
 })
 
 test_that("is vectorized over `benchmark`", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
-         "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-    col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+  data <- toy_summarize_range_by_benchmark(
+    !!col_benchmark() := c("all", col_unit())
   )
-  # styler: on
 
   out <- summarize_range_by_benchmark(data)
-  expect_equal(unique(out$benchmark), c("all", col_unit()))
+  expect_equal(unique(out[[col_benchmark()]]), c("all", col_unit()))
 })
 
 test_that("without crucial columns errors gracefully", {
-  # styler: off
-  data <- tribble(
-          ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
-               "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-          col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-       col_tsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-    col_tsubsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-          col_isic(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+  benchmarks <- c(
+    col_unit(),
+    col_tsector(),
+    col_tsubsector(),
+    col_isic()
   )
-  # styler: on
-
-  crucial <- col_footprint()
-  bad <- select(data, -all_of(crucial))
-  expect_error(summarize_range_by_benchmark(bad), crucial)
-
-  crucial <- col_benchmark()
-  bad <- select(data, -all_of(crucial))
-  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
-
-  crucial <- col_risk_category_emissions()
-  bad <- select(data, -all_of(crucial))
-  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
+  data <- toy_summarize_range_by_benchmark(
+    !!col_benchmark() := c("all", benchmarks)
+  )
 
   crucial <- col_unit()
   bad <- select(data, -all_of(crucial))
@@ -106,12 +103,21 @@ test_that("without crucial columns errors gracefully", {
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), crucial)
 
-  crucial <- col_tsubsector()
+  crucial <- col_isic()
   bad <- select(data, -all_of(crucial))
-  # summarize_range_by_benchmark(bad)
   expect_error(summarize_range_by_benchmark(bad), crucial)
 
-  crucial <- col_isic()
+  # Other crucial columns
+
+  crucial <- col_benchmark()
+  bad <- select(data, -all_of(crucial))
+  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
+
+  crucial <- col_risk_category_emissions()
+  bad <- select(data, -all_of(crucial))
+  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
+
+  crucial <- col_footprint()
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), crucial)
 })
