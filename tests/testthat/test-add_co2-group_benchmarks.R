@@ -38,9 +38,9 @@ test_that("after `all`, the output is alpha sorted", {
     "all",
     col_unit(),
     col_tsector(),
-    "unit_tilt_sector",
+    unit(col_tsector()),
     col_isic(),
-    "unit_isic_4digit"
+    unit(col_isic())
   )
 
   .all <- "z"
