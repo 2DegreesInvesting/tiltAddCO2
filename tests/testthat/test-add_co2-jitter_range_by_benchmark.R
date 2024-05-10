@@ -49,24 +49,14 @@ test_that("without crucial columns errors gracefully", {
 })
 
 test_that("yields `min*` smaller than `max*`", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~min, ~max,
-         "all",             "low",   1L,   2L
-  )
-  # styler: on
+  data <- toy_jitter_range_range_by_benchmark()
 
   out <- jitter_range_by_benchmark(data)
   expect_true(all(out$min_jitter < out$max_jitter))
 })
 
 test_that("is sensitive to `amount`", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~min, ~max,
-    "all",             "low",   1L,   1L
-  )
-  # styler: on
+  data <- toy_jitter_range_range_by_benchmark()
 
   local_seed(1)
   small <- jitter_range_by_benchmark(data, amount = 0.1)
