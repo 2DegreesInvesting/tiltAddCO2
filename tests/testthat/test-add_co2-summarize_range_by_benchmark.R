@@ -31,7 +31,7 @@ test_that("different benchmarks output different number of rows", {
   out <- summarize_range_by_benchmark(data)
   expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
 
-  benchmark <- "unit_tilt_sector"
+  benchmark <- unit(col_tsector())
   expected <- 24
   # 24 = 3 emission_profile * 2 tilt_sector * 2 tilt_subsector * 2 unit
   out <- summarize_range_by_benchmark(data)
