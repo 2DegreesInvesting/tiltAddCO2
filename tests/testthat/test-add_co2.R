@@ -65,7 +65,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
-    filter(benchmark %in% .benchmark) |>
+    filter(.data[[col_benchmark()]] %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
@@ -93,7 +93,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
-    filter(benchmark %in% .benchmark) |>
+    filter(.data[[col_benchmark()]] %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
@@ -132,7 +132,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
   company <- out |>
     unnest_company() |>
     filter(.data[[col_company_id()]] %in% .data[[col_company_id()]][[1]]) |>
-    filter(benchmark == grouped_by)
+    filter(.data[[col_benchmark()]] == grouped_by)
 
   expect_equal(nrow(company), expected)
 })
@@ -151,7 +151,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
   n_unit <- out |>
     unnest_product() |>
     filter(.data[[col_company_id()]] %in% .data[[col_company_id()]][[1]]) |>
-    filter(benchmark == grouped_by) |>
+    filter(.data[[col_benchmark()]] == grouped_by) |>
     select(all_of(groups)) |>
     distinct() |>
     nrow()
@@ -160,7 +160,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
   company <- out |>
     unnest_company() |>
     filter(.data[[col_company_id()]] %in% .data[[col_company_id()]][[1]]) |>
-    filter(benchmark == grouped_by)
+    filter(.data[[col_benchmark()]] == grouped_by)
 
   expect_equal(nrow(company), expected)
 })
