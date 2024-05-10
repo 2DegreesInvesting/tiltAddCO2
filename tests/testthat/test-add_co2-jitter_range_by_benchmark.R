@@ -22,7 +22,7 @@ test_that("if min/max increases across benchmarks, *jittered increases too (#214
   data <- tribble(
     ~benchmark, ~emission_profile, ~min, ~max, ~unit,
          "all",             "low",   1L,   2L,    NA,
-        "unit",             "low",   3L,   4L,  "m2"
+        col_unit(),             "low",   3L,   4L,  "m2"
   )
   # styler: on
 
@@ -45,7 +45,7 @@ test_that("adds columns `min_jitter` and `max_jitter`", {
   # styler: on
 
   out <- jitter_range_by_benchmark(data)
-  expect_named(out, c(names(data), c("min_jitter", "max_jitter")))
+  expect_named(out, c(names(data), c(col_min_jitter(), col_max_jitter())))
 })
 
 test_that("without crucial columns errors gracefully", {

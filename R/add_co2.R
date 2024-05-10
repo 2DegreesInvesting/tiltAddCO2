@@ -67,13 +67,14 @@ select_product_id_and_footprint <- function(data) {
   select(data, matches(c(col_product_id(), col_footprint())))
 }
 
-add_co2_footprint_mean <- function(data, name = "co2_avg") {
+add_co2_footprint_mean <- function(data) {
   product <- data |>
     unnest_product()
 
   by <- c(col_company_id(), col_benchmark())
   footprint <- extract_name(product, col_footprint())
 
+  name <- col_footprint_mean()
   footprint_mean <- product |>
     select(all_of(by), matches(col_footprint())) |>
     summarise(
@@ -88,7 +89,7 @@ add_co2_footprint_mean <- function(data, name = "co2_avg") {
 }
 
 prune_useless_rows_introduced_when_binding_disparate_columns <- function(data) {
-  filter(data, !is.na(.data[["min_jitter"]]) | !is.na(.data[["max_jitter"]]))
+  filter(data, !is.na(.data[[col_min_jitter()]]) | !is.na(.data[[col_max_jitter()]]))
 }
 
 restore_missing_products_from <- function(data, profile) {
@@ -98,6 +99,6 @@ restore_missing_products_from <- function(data, profile) {
 }
 
 pick_missing_risk_category <- function(data) {
-  .col <- extract_name(data, pattern_risk_category_emissions_profile_any())
+  .col <- extract_name(data, pattern_risk_category_emissions_any())
   filter(data, is.na(.data[[.col]]))
 }

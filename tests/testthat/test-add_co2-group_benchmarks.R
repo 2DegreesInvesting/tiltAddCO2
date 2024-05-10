@@ -1,46 +1,46 @@
 test_that("with products-benchmarks, outpts the expected groups", {
   product_benchmarks <- c(
     "all",
-    "unit",
-    "tilt_sector",
-    "unit_tilt_sector",
-    "isic_4digit",
-    "unit_isic_4digit"
+    col_unit(),
+    col_tsector(),
+    unit(col_tsector()),
+    col_isic(),
+    unit(col_isic())
   )
-  all <- c(col_benchmark(), col_risk_category_emissions_profile())
+  all <- c(col_benchmark(), col_risk_category_emissions())
   expect_snapshot(group_benchmark(product_benchmarks, all))
 })
 
 test_that("with inputs-benchmarks, outpts the expected groups", {
   input_benchmark <- c(
     "all",
-    "input_isic_4digit",
-    "input_tilt_sector",
-    "input_unit",
-    "input_unit_input_isic_4digit",
-    "input_unit_input_tilt_sector"
+    input(col_isic()),
+    input(col_tsector()),
+    input(col_unit()),
+    input(unit(input(col_isic()))),
+    input(unit(input(col_tsector())))
   )
-  all <- c(col_benchmark(), "emission_upstream_profile")
+  all <- c(col_benchmark(), col_risk_category_emissions_upstream())
 
   expect_snapshot(group_benchmark(input_benchmark, all))
 })
 
 test_that("is sensitive to `all`", {
-  out <- group_benchmark("unit", all = "x")
-  expect_equal(out[[1]], c("x", "unit"))
+  out <- group_benchmark(col_unit(), all = "x")
+  expect_equal(out[[1]], c("x", col_unit()))
 
-  out <- group_benchmark("unit", all = "y")
-  expect_equal(out[[1]], c("y", "unit"))
+  out <- group_benchmark(col_unit(), all = "y")
+  expect_equal(out[[1]], c("y", col_unit()))
 })
 
 test_that("after `all`, the output is alpha sorted", {
   benchmarks <- c(
     "all",
-    "unit",
-    "tilt_sector",
-    "unit_tilt_sector",
-    "isic_4digit",
-    "unit_isic_4digit"
+    col_unit(),
+    col_tsector(),
+    unit(col_tsector()),
+    col_isic(),
+    unit(col_isic())
   )
 
   .all <- "z"

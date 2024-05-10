@@ -7,23 +7,34 @@ test_that("at product level, different values of co2 footprint yield different v
 
   out <- profile |> add_co2(co2)
 
-  cols <- c("companies_id", "^min", "^max", "unit", "benchmark", "emission_profile", "unit", "tilt_sector", "tilt_subsector", "isic_4digit", "co2_footprint")
+  cols <- c(
+    col_company_id(),
+    col_unit(),
+    col_benchmark(),
+    col_risk_category_emissions(),
+    col_footprint(),
+    paste0(anchor(col_min()), "|", anchor(col_min_jitter())),
+    paste0(anchor(col_max()), "|", anchor(col_max_jitter())),
+    col_tsector(),
+    col_tsubsector(),
+    col_isic()
+  )
   product <- out |>
     unnest_product() |>
-    filter(benchmark == "unit") |>
-    filter(emission_profile == "high") |>
+    filter(.data[[col_benchmark()]] == col_unit()) |>
+    filter(.data[[col_risk_category_emissions()]] == "high") |>
     select(matches(cols))
 
   # Units with different footprint ...
   expect_false(identical(
-    pull(filter(product, unit == "kg"), "co2_footprint"),
-    pull(filter(product, unit == "m2"), "co2_footprint")
+    pull(filter(product, unit == "kg"), col_footprint()),
+    pull(filter(product, unit == "m2"), col_footprint())
   ))
 
   # yield different jittered footprint
   expect_false(identical(
-    pull(filter(product, unit == "kg"), "min_jitter"),
-    pull(filter(product, unit == "m2"), "min_jitter")
+    pull(filter(product, unit == "kg"), col_min_jitter()),
+    pull(filter(product, unit == "m2"), col_min_jitter())
   ))
 })
 
@@ -41,17 +52,26 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
   profile <- toy_profile_emissions_impl_output()
 
+  relevant_pattern <- c(
+    col_benchmark(),
+    pattern_risk_category_emissions_any(),
+    col_footprint(),
+    col_footprint_mean(),
+    anchor(col_min()),
+    anchor(col_max())
+  )
+
   .benchmark <- "all"
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
     filter(benchmark %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
-    select(matches(c("benchmark", "profile$", "co2", "min$", "max$"))) |>
+    select(matches(relevant_pattern)) |>
     distinct()
 
   # different risk category has different min
-  col <- col_risk_category_emissions_profile()
+  col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
     pull(min)
@@ -69,17 +89,17 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     pull(max)
   expect_false(identical(low_max, high_max))
 
-  .benchmark <- "unit"
+  .benchmark <- col_unit()
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
     filter(benchmark %in% .benchmark) |>
     filter(emission_profile == c("high", "low")) |>
-    select(matches(c("benchmark", "profile$", "co2", "min$", "max$"))) |>
+    select(matches(relevant_pattern)) |>
     distinct()
 
   # different risk category has different min
-  col <- col_risk_category_emissions_profile()
+  col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
     pull(min)
@@ -123,11 +143,11 @@ test_that("at company level, yields the expected number of rows with benchmark '
 
   out <- profile |> add_co2(co2)
 
-  grouped_by <- "unit"
+  grouped_by <- col_unit()
   # "high", "medium", "low", NA
   n_risk_category <- 4
-  all <- c(col_benchmark(), col_risk_category_emissions_profile())
-  groups <- group_benchmark("unit", all)[[1]]
+  all <- c(col_benchmark(), col_risk_category_emissions())
+  groups <- group_benchmark(col_unit(), all)[[1]]
   n_unit <- out |>
     unnest_product() |>
     filter(companies_id %in% companies_id[[1]]) |>
@@ -166,8 +186,8 @@ test_that("at product level, has min and max", {
   profile <- toy_profile_emissions_impl_output()
 
   out <- profile |> add_co2(co2)
-  expect_true(hasName(unnest_product(out), "min"))
-  expect_true(hasName(unnest_product(out), "max"))
+  expect_true(hasName(unnest_product(out), col_min()))
+  expect_true(hasName(unnest_product(out), col_max()))
 })
 
 test_that("at company level, lacks min and max", {
@@ -175,8 +195,8 @@ test_that("at company level, lacks min and max", {
   profile <- toy_profile_emissions_impl_output()
 
   out <- profile |> add_co2(co2)
-  expect_false(hasName(unnest_company(out), "min"))
-  expect_false(hasName(unnest_company(out), "max"))
+  expect_false(hasName(unnest_company(out), col_min()))
+  expect_false(hasName(unnest_company(out), col_max()))
 })
 
 test_that("at product level, has the jittered range of co2 footprint", {
@@ -184,8 +204,8 @@ test_that("at product level, has the jittered range of co2 footprint", {
   profile <- toy_profile_emissions_impl_output()
 
   out <- profile |> add_co2(co2)
-  expect_true(hasName(out |> unnest_product(), "min_jitter"))
-  expect_true(hasName(out |> unnest_product(), "max_jitter"))
+  expect_true(hasName(out |> unnest_product(), col_min_jitter()))
+  expect_true(hasName(out |> unnest_product(), col_max_jitter()))
 })
 
 test_that("at product level, the jittered range of co2 footprint isn't full of `NA`s", {
@@ -195,8 +215,8 @@ test_that("at product level, the jittered range of co2 footprint isn't full of `
   out <- profile |> add_co2(co2)
 
   product <- unnest_product(out)
-  expect_false(all(is.na(product[["min_jitter"]])))
-  expect_false(all(is.na(product[["max_jitter"]])))
+  expect_false(all(is.na(product[[col_min_jitter()]])))
+  expect_false(all(is.na(product[[col_max_jitter()]])))
 })
 
 test_that("at company level, has the average co2 footprint", {
