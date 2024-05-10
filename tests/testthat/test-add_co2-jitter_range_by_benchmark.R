@@ -1,5 +1,5 @@
 test_that("if min/max increases across risk categories, *jittered increases too (#214#issuecomment-2061180499)", {
-  data <- example_data_jitter_range(
+  data <- toy_jitter_range_range_by_benchmark(
     !!col_risk_category_emissions() := c("low", "high"),
     !!col_min() := c(1, 3),
     !!col_max() := c(2, 4)
@@ -16,7 +16,7 @@ test_that("if min/max increases across risk categories, *jittered increases too 
 })
 
 test_that("if min/max increases across benchmarks, *jittered increases too (#214#issuecomment-2061180499)  ", {
-  data <- example_data_jitter_range(
+  data <- toy_jitter_range_range_by_benchmark(
     !!col_benchmark() := c("all", col_unit()),
     !!col_min() := c(1, 3),
     !!col_max() := c(2, 4),
@@ -34,7 +34,7 @@ test_that("if min/max increases across benchmarks, *jittered increases too (#214
 })
 
 test_that("adds columns `min_jitter` and `max_jitter`", {
-  data <- example_data_jitter_range()
+  data <- toy_jitter_range_range_by_benchmark()
 
   out <- jitter_range_by_benchmark(data)
   expect_named(out, c(names(data), c(col_min_jitter(), col_max_jitter())))
