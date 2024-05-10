@@ -9,15 +9,17 @@ test_that("at product level, different values of co2 footprint yield different v
 
   cols <- c(
       col_company_id(),
-      "^min",
-      "^max",
       col_unit(),
+
       col_benchmark(),
       col_risk_category_emissions_profile(),
+      col_footprint(),
+      "^min$|^min_jitter$",
+      "^max$|^max_jitter$",
+
       col_tsector(),
       col_tsubsector(),
-      col_isic(),
-      col_footprint()
+      col_isic()
     )
   product <- out |>
     unnest_product() |>
