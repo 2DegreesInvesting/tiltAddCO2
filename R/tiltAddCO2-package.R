@@ -1,3 +1,7 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
 #' @import tiltIndicator
 #' @import tiltToyData
 #' @importFrom dplyr bind_rows
@@ -23,4 +27,5 @@
 #' @importFrom tibble tribble
 #' @importFrom tidyselect all_of
 #' @importFrom tidyselect matches
+## usethis namespace: end
 NULL
