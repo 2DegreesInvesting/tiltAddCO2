@@ -1,15 +1,15 @@
 test_that("different benchmarks output different number of rows", {
   x <- tidyr::expand_grid(
-    benchmark = c("all", col_unit(), col_tsector(), unit(col_tsector())),
-    emission_profile = c("low", "medium", "high"),
-    unit = c("m2", "kg"),
-    tilt_sector = c("sector1", "sector2"),
-    tilt_subsector = c("subsector1", "subsector2"),
+    !!col_benchmark() := c("all", col_unit(), col_tsector(), unit(col_tsector())),
+    !!col_risk_category_emissions() := c("low", "medium", "high"),
+    !!col_unit() := c("m2", "kg"),
+    !!col_tsector() := c("sector1", "sector2"),
+    !!col_tsubsector() := c("subsector1", "subsector2"),
   )
   y <- tibble(
-    emission_profile = c("low", "medium", "high"),
-    isic_4digit = "'1234'",
-    co2_footprint = 1:3,
+    !!col_risk_category_emissions() := c("low", "medium", "high"),
+    !!col_isic() := "'1234'",
+    !!col_footprint() := 1:3,
   )
   data <- left_join(x, y, by = col_risk_category_emissions(), relationship = "many-to-many")
 
