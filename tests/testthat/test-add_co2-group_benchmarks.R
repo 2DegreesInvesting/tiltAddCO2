@@ -4,7 +4,7 @@ test_that("with products-benchmarks, outpts the expected groups", {
     "unit",
     col_tsector(),
     "unit_tilt_sector",
-    "isic_4digit",
+    col_isic(),
     "unit_isic_4digit"
   )
   all <- c(col_benchmark(), col_risk_category_emissions())
@@ -39,7 +39,7 @@ test_that("after `all`, the output is alpha sorted", {
     "unit",
     col_tsector(),
     "unit_tilt_sector",
-    "isic_4digit",
+    col_isic(),
     "unit_isic_4digit"
   )
 
