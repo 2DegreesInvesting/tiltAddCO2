@@ -7,17 +7,14 @@ test_that("at product level, different values of co2 footprint yield different v
 
   out <- profile |> add_co2(co2)
 
-  min_pattern <- paste0(anchor(col_min()), "|", anchor(col_min_jitter()))
-  max_pattern <- paste0(anchor(col_max()), "|", anchor(col_max_jitter()))
-
   cols <- c(
     col_company_id(),
     col_unit(),
     col_benchmark(),
     col_risk_category_emissions(),
     col_footprint(),
-    min_pattern,
-    max_pattern,
+    paste0(anchor(col_min()), "|", anchor(col_min_jitter())),
+    paste0(anchor(col_max()), "|", anchor(col_max_jitter())),
     col_tsector(),
     col_tsubsector(),
     col_isic()
