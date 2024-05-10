@@ -77,7 +77,7 @@ test_that("without crucial columns errors gracefully", {
                "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
               "unit",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
        "tilt_sector",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-    "tilt_subsector",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+    col_tsubsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
        "isic_4digit",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
   )
   # styler: on
@@ -102,11 +102,11 @@ test_that("without crucial columns errors gracefully", {
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), crucial)
 
-  crucial <- "tilt_subsector"
+  crucial <- col_tsubsector()
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), crucial)
 
-  crucial <- "tilt_subsector"
+  crucial <- col_tsubsector()
   bad <- select(data, -all_of(crucial))
   # summarize_range_by_benchmark(bad)
   expect_error(summarize_range_by_benchmark(bad), crucial)

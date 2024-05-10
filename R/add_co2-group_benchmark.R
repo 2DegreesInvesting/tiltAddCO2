@@ -42,8 +42,8 @@ group_benchmark_impl <- function(x, all) {
   if (any(grepl("tilt_sector", out))) {
     # extract original match
     extracted <- grep("tilt_sector", out, value = TRUE)
-    # turn "tilt_sector" into "tilt_subsector"
-    out <- gsub("tilt_sector", "tilt_subsector", out)
+    # turn "tilt_sector" into col_tsubsector()
+    out <- gsub("tilt_sector", col_tsubsector(), out)
     # re-add original match
     out <- c(out, extracted)
   }
