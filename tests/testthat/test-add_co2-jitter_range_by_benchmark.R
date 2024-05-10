@@ -41,12 +41,7 @@ test_that("adds columns `min_jitter` and `max_jitter`", {
 })
 
 test_that("without crucial columns errors gracefully", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~min, ~max,
-         "all",             "low",   1L,   1L
-  )
-  # styler: on
+  data <- toy_jitter_range_range_by_benchmark()
 
   expect_error(jitter_range_by_benchmark(data |> select(-benchmark)), "benchmark.*not")
   expect_error(jitter_range_by_benchmark(data |> select(-min)), "missing.*min")
