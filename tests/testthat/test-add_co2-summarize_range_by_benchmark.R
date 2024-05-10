@@ -17,39 +17,39 @@ test_that("different benchmarks output different number of rows", {
     relationship = "many-to-many"
   )
 
-  benchmark <- "all"
+  .benchmark <- "all"
   expected <- 3
   # 3 = 3 emission_profile
   out <- summarize_range_by_benchmark(data)
   expect_equal(
-    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
     expected
   )
 
-  benchmark <- col_unit()
+  .benchmark <- col_unit()
   expected <- 6
   # 6 = 3 emission_profile * 2 unit
   out <- summarize_range_by_benchmark(data)
   expect_equal(
-    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
     expected
   )
 
-  benchmark <- col_tsector()
+  .benchmark <- col_tsector()
   expected <- 12
   # 12 = 3 emission_profile * 2 tilt_sector * 2 tilt_subsector
   out <- summarize_range_by_benchmark(data)
   expect_equal(
-    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
     expected
   )
 
-  benchmark <- unit(col_tsector())
+  .benchmark <- unit(col_tsector())
   expected <- 24
   # 24 = 3 emission_profile * 2 tilt_sector * 2 tilt_subsector * 2 unit
   out <- summarize_range_by_benchmark(data)
   expect_equal(
-    nrow(filter(out, .data[[col_benchmark()]] == .env$benchmark)),
+    nrow(filter(out, .data[[col_benchmark()]] == .benchmark)),
     expected
   )
 })
