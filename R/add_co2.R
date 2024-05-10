@@ -67,13 +67,14 @@ select_product_id_and_footprint <- function(data) {
   select(data, matches(c(col_product_id(), col_footprint())))
 }
 
-add_co2_footprint_mean <- function(data, name = "co2_avg") {
+add_co2_footprint_mean <- function(data) {
   product <- data |>
     unnest_product()
 
   by <- c(col_company_id(), col_benchmark())
   footprint <- extract_name(product, col_footprint())
 
+  name <- col_footprint_mean()
   footprint_mean <- product |>
     select(all_of(by), matches(col_footprint())) |>
     summarise(
