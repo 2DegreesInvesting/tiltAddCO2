@@ -77,7 +77,7 @@ test_that("is vectorized over `benchmark`", {
   )
 
   out <- summarize_range_by_benchmark(data)
-  expect_equal(unique(out$benchmark), c("all", col_unit()))
+  expect_equal(unique(out[[col_benchmark()]]), c("all", col_unit()))
 })
 
 test_that("without crucial columns errors gracefully", {
