@@ -1,6 +1,6 @@
 test_that("different benchmarks output different number of rows", {
   x <- tidyr::expand_grid(
-    benchmark = c("all", "unit", col_tsector(), "unit_tilt_sector"),
+    benchmark = c("all", col_unit(), col_tsector(), "unit_tilt_sector"),
     emission_profile = c("low", "medium", "high"),
     unit = c("m2", "kg"),
     tilt_sector = c("sector1", "sector2"),
@@ -19,7 +19,7 @@ test_that("different benchmarks output different number of rows", {
   out <- summarize_range_by_benchmark(data)
   expect_equal(nrow(filter(out, benchmark == .env$benchmark)), expected)
 
-  benchmark <- "unit"
+  benchmark <- col_unit()
   expected <- 6
   # 6 = 3 emission_profile * 2 unit
   out <- summarize_range_by_benchmark(data)
@@ -62,12 +62,12 @@ test_that("is vectorized over `benchmark`", {
   data <- tribble(
     ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
          "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-        "unit",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+        col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
   )
   # styler: on
 
   out <- summarize_range_by_benchmark(data)
-  expect_equal(unique(out$benchmark), c("all", "unit"))
+  expect_equal(unique(out$benchmark), c("all", col_unit()))
 })
 
 test_that("without crucial columns errors gracefully", {
@@ -75,7 +75,7 @@ test_that("without crucial columns errors gracefully", {
   data <- tribble(
           ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
                "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-              "unit",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+              col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
        col_tsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
     col_tsubsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
        col_isic(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",

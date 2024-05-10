@@ -22,7 +22,7 @@ test_that("if min/max increases across benchmarks, *jittered increases too (#214
   data <- tribble(
     ~benchmark, ~emission_profile, ~min, ~max, ~unit,
          "all",             "low",   1L,   2L,    NA,
-        "unit",             "low",   3L,   4L,  "m2"
+        col_unit(),             "low",   3L,   4L,  "m2"
   )
   # styler: on
 

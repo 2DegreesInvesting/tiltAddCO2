@@ -18,15 +18,15 @@ group_benchmark_impl <- function(x, all) {
     out <- c(out, x)
   }
 
-  # Handle "unit":
+  # Handle unit:
   # 1. Remove it from everywhere
-  out <- gsub("unit", "", out)
+  out <- gsub(col_unit(), "", out)
   # 2. Add it again wherever it's necessary
-  if (grepl("unit", x)) {
+  if (grepl(col_unit(), x)) {
     if (grepl("input", x)) {
       out <- c(out, "input_unit")
     } else {
-      out <- c(out, "unit")
+      out <- c(out, col_unit())
     }
   }
 

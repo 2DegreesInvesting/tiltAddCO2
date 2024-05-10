@@ -21,7 +21,7 @@ test_that("at product level, different values of co2 footprint yield different v
   )
   product <- out |>
     unnest_product() |>
-    filter(.data[[col_benchmark()]] == "unit") |>
+    filter(.data[[col_benchmark()]] == col_unit()) |>
     filter(.data[[col_risk_category_emissions()]] == "high") |>
     select(matches(cols))
 
@@ -89,7 +89,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     pull(max)
   expect_false(identical(low_max, high_max))
 
-  .benchmark <- "unit"
+  .benchmark <- col_unit()
   pick <- profile |>
     add_co2(co2) |>
     unnest_product() |>
@@ -147,7 +147,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
   # "high", "medium", "low", NA
   n_risk_category <- 4
   all <- c(col_benchmark(), col_risk_category_emissions())
-  groups <- group_benchmark("unit", all)[[1]]
+  groups <- group_benchmark(col_unit(), all)[[1]]
   n_unit <- out |>
     unnest_product() |>
     filter(companies_id %in% companies_id[[1]]) |>

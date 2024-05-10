@@ -1,7 +1,7 @@
 test_that("with products-benchmarks, outpts the expected groups", {
   product_benchmarks <- c(
     "all",
-    "unit",
+    col_unit(),
     col_tsector(),
     "unit_tilt_sector",
     col_isic(),
@@ -26,17 +26,17 @@ test_that("with inputs-benchmarks, outpts the expected groups", {
 })
 
 test_that("is sensitive to `all`", {
-  out <- group_benchmark("unit", all = "x")
-  expect_equal(out[[1]], c("x", "unit"))
+  out <- group_benchmark(col_unit(), all = "x")
+  expect_equal(out[[1]], c("x", col_unit()))
 
-  out <- group_benchmark("unit", all = "y")
-  expect_equal(out[[1]], c("y", "unit"))
+  out <- group_benchmark(col_unit(), all = "y")
+  expect_equal(out[[1]], c("y", col_unit()))
 })
 
 test_that("after `all`, the output is alpha sorted", {
   benchmarks <- c(
     "all",
-    "unit",
+    col_unit(),
     col_tsector(),
     "unit_tilt_sector",
     col_isic(),
