@@ -16,7 +16,7 @@ test_that("with inputs-benchmarks, outpts the expected groups", {
     "all",
     "input_isic_4digit",
     "input_tilt_sector",
-    "input_unit",
+    input(col_unit()),
     "input_unit_input_isic_4digit",
     "input_unit_input_tilt_sector"
   )

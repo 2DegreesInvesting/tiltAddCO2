@@ -24,7 +24,7 @@ group_benchmark_impl <- function(x, all) {
   # 2. Add it again wherever it's necessary
   if (grepl(col_unit(), x)) {
     if (grepl("input", x)) {
-      out <- c(out, "input_unit")
+      out <- c(out, input(col_unit()))
     } else {
       out <- c(out, col_unit())
     }
