@@ -27,14 +27,14 @@ test_that("at product level, different values of co2 footprint yield different v
 
   # Units with different footprint ...
   expect_false(identical(
-    pull(filter(product, unit == "kg"), col_footprint()),
-    pull(filter(product, unit == "m2"), col_footprint())
+    pull(filter(product, .data[[col_unit()]] == "kg"), col_footprint()),
+    pull(filter(product, .data[[col_unit()]] == "m2"), col_footprint())
   ))
 
   # yield different jittered footprint
   expect_false(identical(
-    pull(filter(product, unit == "kg"), col_min_jitter()),
-    pull(filter(product, unit == "m2"), col_min_jitter())
+    pull(filter(product, .data[[col_unit()]] == "kg"), col_min_jitter()),
+    pull(filter(product, .data[[col_unit()]] == "m2"), col_min_jitter())
   ))
 })
 
