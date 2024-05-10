@@ -57,8 +57,8 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     pattern_risk_category_emissions_any(),
     col_footprint(),
     col_footprint_mean(),
-    "^min$",
-    "^max$"
+    anchor(col_min()),
+    anchor(col_max())
   )
 
   .benchmark <- "all"
