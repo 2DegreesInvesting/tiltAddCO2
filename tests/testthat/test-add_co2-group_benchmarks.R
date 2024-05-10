@@ -3,9 +3,9 @@ test_that("with products-benchmarks, outpts the expected groups", {
     "all",
     col_unit(),
     col_tsector(),
-    "unit_tilt_sector",
+    unit(col_tsector()),
     col_isic(),
-    "unit_isic_4digit"
+    unit(col_isic())
   )
   all <- c(col_benchmark(), col_risk_category_emissions())
   expect_snapshot(group_benchmark(product_benchmarks, all))
