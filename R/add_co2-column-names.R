@@ -57,4 +57,3 @@ col_min_jitter <- function() {
 col_max_jitter <- function() {
   "max_jitter"
 }
-
