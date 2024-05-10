@@ -81,7 +81,7 @@ test_that("is sensitive to `amount`", {
   )
   # styler: on
 
-  withr::local_seed(1)
+  local_seed(1)
   small <- jitter_range_by_benchmark(data, amount = 0.1)
   large <- jitter_range_by_benchmark(data, amount = 100)
 

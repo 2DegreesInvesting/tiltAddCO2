@@ -27,5 +27,7 @@
 #' @importFrom tibble tribble
 #' @importFrom tidyselect all_of
 #' @importFrom tidyselect matches
+#' @importFrom withr local_options
+#' @importFrom withr local_seed
 ## usethis namespace: end
 NULL

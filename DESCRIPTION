@@ -18,12 +18,12 @@ Imports:
     tibble,
     tidyselect,
     tiltIndicator (>= 0.0.0.9221),
-    tiltToyData (>= 0.0.0.9204)
+    tiltToyData (>= 0.0.0.9204),
+    withr
 Suggests: 
     testthat (>= 3.0.0),
     tidyr,
-    tiltIndicatorAfter (>= 0.0.0.9038),
-    withr
+    tiltIndicatorAfter (>= 0.0.0.9038)
 Remotes: 
     2DegreesInvesting/tiltIndicator,
     2DegreesInvesting/tiltIndicatorAfter,
