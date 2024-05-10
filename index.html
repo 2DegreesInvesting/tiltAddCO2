@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">tiltAddCO2</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,9 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -75,7 +78,7 @@
 <span></span>
 <span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://2degreesinvesting.github.io/tiltToyData/reference/toy_files.html" class="external-link">toy_emissions_profile_products_ecoinvent</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="va">file</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://2degreesinvesting.github.io/tiltIndicatorAfter/reference/toy_output.html" class="external-link">toy_profile_emissions_impl_output</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://2degreesinvesting.github.io/tiltIndicatorAfter/reference/toy_profile_emissions_impl_output.html" class="external-link">toy_profile_emissions_impl_output</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">with_co2</span> <span class="op">&lt;-</span> <span class="va">profile</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/add_co2.html">add_co2</a></span><span class="op">(</span><span class="va">co2</span><span class="op">)</span></span>
