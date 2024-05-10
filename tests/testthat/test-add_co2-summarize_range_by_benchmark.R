@@ -65,28 +65,15 @@ test_that("is vectorized over `benchmark`", {
 })
 
 test_that("without crucial columns errors gracefully", {
-  # styler: off
-  data <- tribble(
-          ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
-               "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-          col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-       col_tsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-    col_tsubsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-          col_isic(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+  benchmarks <- c(
+    col_unit(),
+    col_tsector(),
+    col_tsubsector(),
+    col_isic()
   )
-  # styler: on
-
-  crucial <- col_footprint()
-  bad <- select(data, -all_of(crucial))
-  expect_error(summarize_range_by_benchmark(bad), crucial)
-
-  crucial <- col_benchmark()
-  bad <- select(data, -all_of(crucial))
-  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
-
-  crucial <- col_risk_category_emissions()
-  bad <- select(data, -all_of(crucial))
-  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
+  data <- toy_summarize_range_by_benchmark(
+    !!col_benchmark() := c("all", benchmarks)
+  )
 
   crucial <- col_unit()
   bad <- select(data, -all_of(crucial))
@@ -100,12 +87,21 @@ test_that("without crucial columns errors gracefully", {
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), crucial)
 
-  crucial <- col_tsubsector()
+  crucial <- col_isic()
   bad <- select(data, -all_of(crucial))
-  # summarize_range_by_benchmark(bad)
   expect_error(summarize_range_by_benchmark(bad), crucial)
 
-  crucial <- col_isic()
+  # Other crucial columns
+
+  crucial <- col_benchmark()
+  bad <- select(data, -all_of(crucial))
+  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
+
+  crucial <- col_risk_category_emissions()
+  bad <- select(data, -all_of(crucial))
+  expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
+
+  crucial <- col_footprint()
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), crucial)
 })
