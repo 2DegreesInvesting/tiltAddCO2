@@ -9,7 +9,10 @@ test_that("if min/max increases across risk categories, *jittered increases too 
 
   # Ensure min and max are strictly increasing
   strictly_increasing <- function(x) all(diff(x) > 0)
-  stopifnot(strictly_increasing(data[[col_min()]]) & strictly_increasing(data$max))
+  stopifnot(
+    strictly_increasing(data[[col_min()]]) &
+      strictly_increasing(data[[col_max()]])
+  )
 
   expect_true(strictly_increasing(out[[col_min_jitter()]]))
   expect_true(strictly_increasing(out[[col_max_jitter()]]))
@@ -27,7 +30,10 @@ test_that("if min/max increases across benchmarks, *jittered increases too (#214
 
   # Ensure min and max are strictly increasing
   strictly_increasing <- function(x) all(diff(x) > 0)
-  stopifnot(strictly_increasing(data[[col_min()]]) & strictly_increasing(data$max))
+  stopifnot(
+    strictly_increasing(data[[col_min()]]) &
+      strictly_increasing(data[[col_max()]])
+  )
 
   expect_true(strictly_increasing(out[[col_min_jitter()]]))
   expect_true(strictly_increasing(out[[col_max_jitter()]]))
