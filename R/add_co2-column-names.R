@@ -14,6 +14,10 @@ col_risk_category_emissions <- function() {
   "emission_profile"
 }
 
+col_risk_category_emissions_upstream <- function() {
+  "emission_upstream_profile"
+}
+
 pattern_risk_category_emissions_any <- function() {
   "^emission.*profile$"
 }

@@ -20,7 +20,7 @@ test_that("with inputs-benchmarks, outpts the expected groups", {
     input(unit(input(col_isic()))),
     input(unit(input(col_tsector())))
   )
-  all <- c(col_benchmark(), "emission_upstream_profile")
+  all <- c(col_benchmark(), col_risk_category_emissions_upstream())
 
   expect_snapshot(group_benchmark(input_benchmark, all))
 })
