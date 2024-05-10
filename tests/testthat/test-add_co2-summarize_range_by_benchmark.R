@@ -11,7 +11,11 @@ test_that("different benchmarks output different number of rows", {
     !!col_isic() := "'1234'",
     !!col_footprint() := 1:3,
   )
-  data <- left_join(x, y, by = col_risk_category_emissions(), relationship = "many-to-many")
+  data <- left_join(
+    x, y,
+    by = col_risk_category_emissions(),
+    relationship = "many-to-many"
+  )
 
   benchmark <- "all"
   expected <- 3
