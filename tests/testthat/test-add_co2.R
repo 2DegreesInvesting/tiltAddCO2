@@ -2,7 +2,7 @@ test_that("at product level, different values of co2 footprint yield different v
   # From reprex 2 at https://github.com/2DegreesInvesting/tiltIndicatorAfter/pull/214#issuecomment-2086975144
   .id <- c("ironhearted_tarpan", "epitaphic_yellowhammer")
   profile <- toy_profile_emissions_impl_output() |>
-    filter(companies_id %in% .id)
+    filter(.data[[col_company_id()]] %in% .id)
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
 
   out <- profile |> add_co2(co2)
@@ -131,7 +131,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
 
   company <- out |>
     unnest_company() |>
-    filter(companies_id %in% companies_id[[1]]) |>
+    filter(.data[[col_company_id()]] %in% companies_id[[1]]) |>
     filter(benchmark == grouped_by)
 
   expect_equal(nrow(company), expected)
@@ -150,7 +150,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
   groups <- group_benchmark(col_unit(), all)[[1]]
   n_unit <- out |>
     unnest_product() |>
-    filter(companies_id %in% companies_id[[1]]) |>
+    filter(.data[[col_company_id()]] %in% companies_id[[1]]) |>
     filter(benchmark == grouped_by) |>
     select(all_of(groups)) |>
     distinct() |>
@@ -159,7 +159,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
 
   company <- out |>
     unnest_company() |>
-    filter(companies_id %in% companies_id[[1]]) |>
+    filter(.data[[col_company_id()]] %in% companies_id[[1]]) |>
     filter(benchmark == grouped_by)
 
   expect_equal(nrow(company), expected)
