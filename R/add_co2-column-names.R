@@ -18,14 +18,6 @@ pattern_risk_category_emissions_any <- function() {
   "^emission.*profile$"
 }
 
-col_min_jitter <- function() {
-  "co2e_lower"
-}
-
-col_max_jitter <- function() {
-  "co2e_upper"
-}
-
 col_footprint <- function() {
   "co2_footprint"
 }
