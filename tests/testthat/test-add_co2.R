@@ -8,19 +8,17 @@ test_that("at product level, different values of co2 footprint yield different v
   out <- profile |> add_co2(co2)
 
   cols <- c(
-      col_company_id(),
-      col_unit(),
-
-      col_benchmark(),
-      col_risk_category_emissions(),
-      col_footprint(),
-      "^min$|^min_jitter$",
-      "^max$|^max_jitter$",
-
-      col_tsector(),
-      col_tsubsector(),
-      col_isic()
-    )
+    col_company_id(),
+    col_unit(),
+    col_benchmark(),
+    col_risk_category_emissions(),
+    col_footprint(),
+    "^min$|^min_jitter$",
+    "^max$|^max_jitter$",
+    col_tsector(),
+    col_tsubsector(),
+    col_isic()
+  )
   product <- out |>
     unnest_product() |>
     filter(.data[[col_benchmark()]] == "unit") |>
@@ -55,13 +53,13 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   profile <- toy_profile_emissions_impl_output()
 
   relevant_pattern <- c(
-      col_benchmark(),
-      pattern_risk_category_emissions_any(),
-      col_footprint(),
-      col_footprint_mean(),
-      "^min$",
-      "^max$"
-    )
+    col_benchmark(),
+    pattern_risk_category_emissions_any(),
+    col_footprint(),
+    col_footprint_mean(),
+    "^min$",
+    "^max$"
+  )
 
   .benchmark <- "all"
   pick <- profile |>

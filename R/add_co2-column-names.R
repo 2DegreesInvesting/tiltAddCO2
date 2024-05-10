@@ -49,4 +49,3 @@ col_tsector <- function() {
 col_tsubsector <- function() {
   "tilt_subsector"
 }
-
