@@ -1,6 +1,6 @@
 test_that("different benchmarks output different number of rows", {
   x <- tidyr::expand_grid(
-    benchmark = c("all", col_unit(), col_tsector(), "unit_tilt_sector"),
+    benchmark = c("all", col_unit(), col_tsector(), unit(col_tsector())),
     emission_profile = c("low", "medium", "high"),
     unit = c("m2", "kg"),
     tilt_sector = c("sector1", "sector2"),
@@ -62,7 +62,7 @@ test_that("is vectorized over `benchmark`", {
   data <- tribble(
     ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
          "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-        col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+    col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
   )
   # styler: on
 
@@ -75,10 +75,10 @@ test_that("without crucial columns errors gracefully", {
   data <- tribble(
           ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
                "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-              col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+          col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
        col_tsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
     col_tsubsector(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-       col_isic(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+          col_isic(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
   )
   # styler: on
 
