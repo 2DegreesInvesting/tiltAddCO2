@@ -1,17 +1,8 @@
 test_that("if min/max increases across risk categories, *jittered increases too (#214#issuecomment-2061180499)", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~min, ~max,
-         "all",             "low",   1L,   2L,
-         "all",            "high",   3L,   4L
-  )
-  # styler: on
-
-  data <- tibble(
-    !!col_benchmark() := c("all", "all"),
+  data <- example_data_jitter_range(
     !!col_risk_category_emissions() := c("low", "high"),
-    !!col_min() := c(1L, 3L),
-    !!col_max() := c(2L, 4L)
+    !!col_min() := c(1, 3),
+    !!col_max() := c(2, 4)
   )
 
   out <- jitter_range_by_benchmark(data)
@@ -25,13 +16,12 @@ test_that("if min/max increases across risk categories, *jittered increases too 
 })
 
 test_that("if min/max increases across benchmarks, *jittered increases too (#214#issuecomment-2061180499)  ", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~min, ~max, ~unit,
-         "all",             "low",   1L,   2L,    NA,
-        col_unit(),             "low",   3L,   4L,  "m2"
+  data <- example_data_jitter_range(
+    !!col_benchmark() := c("all", col_unit()),
+    !!col_min() := c(1, 3),
+    !!col_max() := c(2, 4),
+    !!col_unit() := c(NA, "m2")
   )
-  # styler: on
 
   out <- jitter_range_by_benchmark(data)
 
