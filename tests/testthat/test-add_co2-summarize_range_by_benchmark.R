@@ -90,7 +90,7 @@ test_that("without crucial columns errors gracefully", {
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
 
-  crucial <- "emission_profile"
+  crucial <- col_risk_category_emissions()
   bad <- select(data, -all_of(crucial))
   expect_error(summarize_range_by_benchmark(bad), class = "check_matches_name")
 
