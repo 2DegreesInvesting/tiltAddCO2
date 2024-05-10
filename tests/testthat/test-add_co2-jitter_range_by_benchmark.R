@@ -12,7 +12,7 @@ test_that("if min/max increases across risk categories, *jittered increases too 
   stopifnot(strictly_increasing(data$min) & strictly_increasing(data$max))
 
   expect_true(strictly_increasing(out[[col_min_jitter()]]))
-  expect_true(strictly_increasing(out$max_jitter))
+  expect_true(strictly_increasing(out[[col_max_jitter()]]))
 })
 
 test_that("if min/max increases across benchmarks, *jittered increases too (#214#issuecomment-2061180499)  ", {
@@ -30,7 +30,7 @@ test_that("if min/max increases across benchmarks, *jittered increases too (#214
   stopifnot(strictly_increasing(data$min) & strictly_increasing(data$max))
 
   expect_true(strictly_increasing(out[[col_min_jitter()]]))
-  expect_true(strictly_increasing(out$max_jitter))
+  expect_true(strictly_increasing(out[[col_max_jitter()]]))
 })
 
 test_that("adds columns `min_jitter` and `max_jitter`", {
@@ -52,7 +52,7 @@ test_that("yields `min*` smaller than `max*`", {
   data <- toy_jitter_range_range_by_benchmark()
 
   out <- jitter_range_by_benchmark(data)
-  expect_true(all(out[[col_min_jitter()]] < out$max_jitter))
+  expect_true(all(out[[col_min_jitter()]] < out[[col_max_jitter()]]))
 })
 
 test_that("is sensitive to `amount`", {
@@ -64,5 +64,5 @@ test_that("is sensitive to `amount`", {
 
   # Increase `amount` to get more extreeme min/max_jitter
   expect_true(large[[col_min_jitter()]] < small[[col_min_jitter()]])
-  expect_true(small$max_jitter < large$max_jitter)
+  expect_true(small[[col_max_jitter()]] < large[[col_max_jitter()]])
 })
