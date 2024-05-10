@@ -56,13 +56,9 @@ test_that("with a simple case yields the same as `summarize_range()` (#214#issue
 })
 
 test_that("is vectorized over `benchmark`", {
-  # styler: off
-  data <- tribble(
-    ~benchmark, ~emission_profile, ~co2_footprint, ~unit, ~tilt_sector, ~tilt_subsector, ~isic_4digit,
-         "all",             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
-    col_unit(),             "low",             1L,  "m2",    "sector1",    "subsector1",     "'1234'",
+  data <- toy_summarize_range_by_benchmark(
+    !!col_benchmark() := c("all", col_unit())
   )
-  # styler: on
 
   out <- summarize_range_by_benchmark(data)
   expect_equal(unique(out$benchmark), c("all", col_unit()))
