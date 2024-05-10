@@ -27,14 +27,14 @@ test_that("at product level, different values of co2 footprint yield different v
 
   # Units with different footprint ...
   expect_false(identical(
-    pull(filter(product, .data[[col_unit()]] == "kg"), col_footprint()),
-    pull(filter(product, .data[[col_unit()]] == "m2"), col_footprint())
+    pull(filter(product, unit == "kg"), col_footprint()),
+    pull(filter(product, unit == "m2"), col_footprint())
   ))
 
   # yield different jittered footprint
   expect_false(identical(
-    pull(filter(product, .data[[col_unit()]] == "kg"), col_min_jitter()),
-    pull(filter(product, .data[[col_unit()]] == "m2"), col_min_jitter())
+    pull(filter(product, unit == "kg"), col_min_jitter()),
+    pull(filter(product, unit == "m2"), col_min_jitter())
   ))
 })
 
@@ -66,7 +66,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     add_co2(co2) |>
     unnest_product() |>
     filter(.data[[col_benchmark()]] %in% .benchmark) |>
-    filter(.data[[col_risk_category_emissions()]] == c("high", "low")) |>
+    filter(emission_profile == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
 
@@ -74,10 +74,10 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(min)
+    pull(col_min())
   high_min <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(min)
+    pull(col_min())
   expect_false(identical(low_min, high_min))
 
   # different risk category has different max
@@ -94,7 +94,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     add_co2(co2) |>
     unnest_product() |>
     filter(.data[[col_benchmark()]] %in% .benchmark) |>
-    filter(.data[[col_risk_category_emissions()]] == c("high", "low")) |>
+    filter(emission_profile == c("high", "low")) |>
     select(matches(relevant_pattern)) |>
     distinct()
 
@@ -102,10 +102,10 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(min)
+    pull(col_min())
   high_min <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(min)
+    pull(col_min())
   expect_false(identical(low_min, high_min))
 
   # different risk category has different max
