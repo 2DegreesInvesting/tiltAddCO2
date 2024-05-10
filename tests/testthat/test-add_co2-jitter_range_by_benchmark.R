@@ -7,6 +7,13 @@ test_that("if min/max increases across risk categories, *jittered increases too 
   )
   # styler: on
 
+  data <- tibble(
+    !!col_benchmark() := c("all", "all"),
+    !!col_risk_category_emissions() := c("low", "high"),
+    !!col_min() := c(1L, 3L),
+    !!col_max() := c(2L, 4L)
+  )
+
   out <- jitter_range_by_benchmark(data)
 
   # Ensure min and max are strictly increasing
