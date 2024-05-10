@@ -7,7 +7,7 @@ test_that("with products-benchmarks, outpts the expected groups", {
     "isic_4digit",
     "unit_isic_4digit"
   )
-  all <- c(col_benchmark(), col_risk_category_emissions_profile())
+  all <- c(col_benchmark(), col_risk_category_emissions())
   expect_snapshot(group_benchmark(product_benchmarks, all))
 })
 

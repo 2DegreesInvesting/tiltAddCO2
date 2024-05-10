@@ -10,11 +10,11 @@ col_benchmark <- function() {
   "benchmark"
 }
 
-col_risk_category_emissions_profile <- function() {
+col_risk_category_emissions <- function() {
   "emission_profile"
 }
 
-pattern_risk_category_emissions_profile_any <- function() {
+pattern_risk_category_emissions_any <- function() {
   "^emission.*profile$"
 }
 

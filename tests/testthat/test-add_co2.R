@@ -12,7 +12,7 @@ test_that("at product level, different values of co2 footprint yield different v
       col_unit(),
 
       col_benchmark(),
-      col_risk_category_emissions_profile(),
+      col_risk_category_emissions(),
       col_footprint(),
       "^min$|^min_jitter$",
       "^max$|^max_jitter$",
@@ -24,7 +24,7 @@ test_that("at product level, different values of co2 footprint yield different v
   product <- out |>
     unnest_product() |>
     filter(.data[[col_benchmark()]] == "unit") |>
-    filter(.data[[col_risk_category_emissions_profile()]] == "high") |>
+    filter(.data[[col_risk_category_emissions()]] == "high") |>
     select(matches(cols))
 
   # Units with different footprint ...
@@ -64,7 +64,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     distinct()
 
   # different risk category has different min
-  col <- col_risk_category_emissions_profile()
+  col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
     pull(min)
@@ -92,7 +92,7 @@ test_that("different risk categories yield different min and max (#214#issuecomm
     distinct()
 
   # different risk category has different min
-  col <- col_risk_category_emissions_profile()
+  col <- col_risk_category_emissions()
   low_min <- pick |>
     filter(.data[[col]] == "low") |>
     pull(min)
@@ -139,7 +139,7 @@ test_that("at company level, yields the expected number of rows with benchmark '
   grouped_by <- "unit"
   # "high", "medium", "low", NA
   n_risk_category <- 4
-  all <- c(col_benchmark(), col_risk_category_emissions_profile())
+  all <- c(col_benchmark(), col_risk_category_emissions())
   groups <- group_benchmark("unit", all)[[1]]
   n_unit <- out |>
     unnest_product() |>

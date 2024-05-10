@@ -6,7 +6,7 @@ summarize_range_by_benchmark <- function(data) {
 split_summarize_range_by_benchmark <- function(data) {
   .all <- c(
     col_benchmark(),
-    extract_name(data, pattern_risk_category_emissions_profile_any())
+    extract_name(data, pattern_risk_category_emissions_any())
   )
   # `split()` drops `NA`s in `.x`, so it makes sense to also drop them in `.by`
   .na.rm <- TRUE
@@ -21,7 +21,7 @@ split_summarize_range_by_benchmark <- function(data) {
 }
 
 check_summarize_range_by_benchmark <- function(data, benchmark_cols) {
-  c(col_benchmark(), col_footprint(), pattern_risk_category_emissions_profile_any(), benchmark_cols) |>
+  c(col_benchmark(), col_footprint(), pattern_risk_category_emissions_any(), benchmark_cols) |>
     walk(function(pattern) check_matches_name(data, pattern))
 
   if (all(is.na(data[[col_benchmark()]]))) {
