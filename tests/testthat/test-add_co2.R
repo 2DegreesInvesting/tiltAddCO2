@@ -83,10 +83,10 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   # different risk category has different max
   low_max <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(max)
+    pull(col_max())
   high_max <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(max)
+    pull(col_max())
   expect_false(identical(low_max, high_max))
 
   .benchmark <- col_unit()
@@ -111,10 +111,10 @@ test_that("different risk categories yield different min and max (#214#issuecomm
   # different risk category has different max
   low_max <- pick |>
     filter(.data[[col]] == "low") |>
-    pull(max)
+    pull(col_max())
   high_max <- pick |>
     filter(.data[[col]] == "high") |>
-    pull(max)
+    pull(col_max())
   expect_false(identical(low_max, high_max))
 })
 
