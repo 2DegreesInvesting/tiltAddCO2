@@ -205,7 +205,7 @@ test_that("at product level, has the jittered range of co2 footprint", {
 
   out <- profile |> add_co2(co2)
   expect_true(hasName(out |> unnest_product(), col_min_jitter()))
-  expect_true(hasName(out |> unnest_product(), "max_jitter"))
+  expect_true(hasName(out |> unnest_product(), col_max_jitter()))
 })
 
 test_that("at product level, the jittered range of co2 footprint isn't full of `NA`s", {
@@ -216,7 +216,7 @@ test_that("at product level, the jittered range of co2 footprint isn't full of `
 
   product <- unnest_product(out)
   expect_false(all(is.na(product[[col_min_jitter()]])))
-  expect_false(all(is.na(product[["max_jitter"]])))
+  expect_false(all(is.na(product[[col_max_jitter()]])))
 })
 
 test_that("at company level, has the average co2 footprint", {
