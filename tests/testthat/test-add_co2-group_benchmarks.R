@@ -2,7 +2,7 @@ test_that("with products-benchmarks, outpts the expected groups", {
   product_benchmarks <- c(
     "all",
     "unit",
-    "tilt_sector",
+    col_tsector(),
     "unit_tilt_sector",
     "isic_4digit",
     "unit_isic_4digit"
@@ -37,7 +37,7 @@ test_that("after `all`, the output is alpha sorted", {
   benchmarks <- c(
     "all",
     "unit",
-    "tilt_sector",
+    col_tsector(),
     "unit_tilt_sector",
     "isic_4digit",
     "unit_isic_4digit"

@@ -39,11 +39,11 @@ group_benchmark_impl <- function(x, all) {
 
   # tilt_sector groups on tilt subsector
   # https://github.com/2DegreesInvesting/tiltIndicatorAfter/issues/194#issuecomment-2050573259
-  if (any(grepl("tilt_sector", out))) {
+  if (any(grepl(col_tsector(), out))) {
     # extract original match
-    extracted <- grep("tilt_sector", out, value = TRUE)
-    # turn "tilt_sector" into col_tsubsector()
-    out <- gsub("tilt_sector", col_tsubsector(), out)
+    extracted <- grep(col_tsector(), out, value = TRUE)
+    # turn col_tsector() into col_tsubsector()
+    out <- gsub(col_tsector(), col_tsubsector(), out)
     # re-add original match
     out <- c(out, extracted)
   }
