@@ -14,8 +14,8 @@ test_that("with products-benchmarks, outpts the expected groups", {
 test_that("with inputs-benchmarks, outpts the expected groups", {
   input_benchmark <- c(
     "all",
-    "input_isic_4digit",
-    "input_tilt_sector",
+    input(col_isic()),
+    input(col_tsector()),
     input(col_unit()),
     "input_unit_input_isic_4digit",
     "input_unit_input_tilt_sector"
