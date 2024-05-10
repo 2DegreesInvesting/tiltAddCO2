@@ -21,8 +21,8 @@ test_that("at product level, different values of co2 footprint yield different v
     )
   product <- out |>
     unnest_product() |>
-    filter(benchmark == "unit") |>
-    filter(emission_profile == "high") |>
+    filter(.data[[col_benchmark()]] == "unit") |>
+    filter(.data[[col_risk_category_emissions_profile()]] == "high") |>
     select(matches(cols))
 
   # Units with different footprint ...
