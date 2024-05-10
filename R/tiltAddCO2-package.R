@@ -29,5 +29,6 @@
 #' @importFrom tidyselect matches
 #' @importFrom withr local_options
 #' @importFrom withr local_seed
+#' @importFrom tiltIndicator example_data_factory
 ## usethis namespace: end
 NULL
