@@ -17,8 +17,8 @@ test_that("with inputs-benchmarks, outpts the expected groups", {
     input(col_isic()),
     input(col_tsector()),
     input(col_unit()),
-    "input_unit_input_isic_4digit",
-    "input_unit_input_tilt_sector"
+    input(unit(input(col_isic()))),
+    input(unit(input(col_tsector())))
   )
   all <- c(col_benchmark(), "emission_upstream_profile")
 
