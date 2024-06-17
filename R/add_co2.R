@@ -19,16 +19,17 @@
 #' co2 <- read_csv(file, show_col_types = FALSE)
 #' profile <- toy_profile_emissions_impl_output()
 #'
-#' with_co2 <- profile |>
-#'   add_co2(co2)
+#' with_co2 <- profile |> add_co2(co2)
 #'
-#' with_co2 |>
-#'   unnest_product() |>
-#'   relocate(matches("co2"))
+#' product <- with_co2 |> unnest_product()
+#'
+#' product |> relocate(matches(c("co2", "min", "max")))
+#'
+#' product |> summarize_noise(.by = "benchmark")
 #'
 #' with_co2 |>
 #'   unnest_company() |>
-#'   relocate(matches("co2"))
+#'   relocate(matches(c("co2")))
 add_co2 <- function(data, co2, jitter_amount = NULL) {
   data_co2 <- data |>
     add_co2_footprint(co2) |>
