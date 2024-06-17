@@ -25,7 +25,6 @@ summarize_noise <- function(data, .by = NULL) {
   crucial <- col_summarize_noise()
   check_crucial_names(data, crucial)
 
-
   data |>
     dplyr::summarize(
       min_noise = mean_noise(.data[[col_min()]], .data[[col_min_jitter()]]),
