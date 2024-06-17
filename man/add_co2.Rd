@@ -31,14 +31,15 @@ file <- toy_emissions_profile_products_ecoinvent()
 co2 <- read_csv(file, show_col_types = FALSE)
 profile <- toy_profile_emissions_impl_output()
 
-with_co2 <- profile |>
-  add_co2(co2)
+with_co2 <- profile |> add_co2(co2)
 
-with_co2 |>
-  unnest_product() |>
-  relocate(matches("co2"))
+product <- with_co2 |> unnest_product()
+
+product |> relocate(matches(c("co2", "min", "max")))
+
+product |> summarize_noise(.by = "benchmark")
 
 with_co2 |>
   unnest_company() |>
-  relocate(matches("co2"))
+  relocate(matches(c("co2")))
 }
