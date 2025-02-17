@@ -37,6 +37,7 @@ add_co2 <- function(data, co2, jitter_amount = NULL) {
 
   product <- data_co2 |>
     unnest_product() |>
+    mutate(benchmark = if_else(is.na(.data$benchmark), "all", .data$benchmark)) |>
     split_summarize_range_by_benchmark() |>
     map(\(.x) jitter_range_by_benchmark(.x, amount = jitter_amount)) |>
     map(\(.x) join_to(.x, unnest_product(data_co2))) |>
